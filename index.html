@@ -43,6 +43,47 @@
             margin-bottom: 16px;
             opacity: 0.8;
         }
+        .week-info {
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .week-info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .week-info-item:not(:last-child) {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .week-info-item.current-week {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .week-info-item.next-week {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .week-info-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            
+            .week-info-item span {
+                font-size: 13px;
+                opacity: 0.8;
+            }
+        }
     </style>
     <script src="js/xlsx.full.min.js"></script>
 </head>
@@ -70,9 +111,17 @@
                         Учебная неделя
                     </span>
                 </div>
-                <select class="week-dropdown" id="weekDropdown">
-                    <option value="">Выберите неделю</option>
-                </select>
+                
+                <div class="custom-select">
+                    <select class="week-dropdown" id="weekDropdown">
+                        <option value="">Выберите неделю</option>
+                    </select>
+                    <div class="select-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <div class="day-selector" id="daySelector">

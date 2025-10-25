@@ -3,10 +3,10 @@
     --primary-dark: #1565c0;
     --text-primary: #212121;
     --text-secondary: #757575;
-    --bg-primary: #ffffff;
+    --bg-primary: #eceaea;
     --bg-secondary: #f5f5f5;
     --bg-surface: #ffffff;
-    --border-color: #e0e0e0;
+    --border-color: #969494;
     --error-color: #d32f2f;
     --success-color: #388e3c;
     --hover-color: rgba(0, 0, 0, 0.04);
@@ -17,10 +17,10 @@
     --primary-dark: #64b5f6;
     --text-primary: #ffffff;
     --text-secondary: #b0b0b0;
-    --bg-primary: #121212;
+    --bg-primary: #000000;
     --bg-secondary: #1e1e1e;
-    --bg-surface: #2d2d2d;
-    --border-color: #404040;
+    --bg-surface: #141519;
+    --border-color: #262729;
     --error-color: #f44336;
     --success-color: #4caf50;
     --hover-color: rgba(255, 255, 255, 0.08);
@@ -394,7 +394,7 @@ body {
     }
 }
 
-.icon, .header-icon, .meta-icon, .empty-icon, .error-icon {
+.icon, .meta-icon, .empty-icon, .error-icon {
     filter: invert(1);
 }
 
@@ -406,3 +406,126 @@ body {
     filter: invert(0);
 }
 
+.custom-select {
+    position: relative;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.custom-select .week-dropdown {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 40px;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.custom-select .week-dropdown:hover {
+    border-color: var(--accent-color);
+    background-color: var(--hover-color);
+}
+
+.custom-select .week-dropdown:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.week-dropdown:focus + .select-arrow {
+    color: var(--accent-color);
+}
+
+.week-dropdown option {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 12px 16px;
+    font-size: 14px;
+    border: none;
+    font-family: inherit;
+}
+
+.week-dropdown option:checked {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.week-dropdown option:hover {
+    background-color: var(--hover-color);
+}
+
+.current-week-option {
+    color: var(--accent-color) !important;
+    font-weight: 600;
+    background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+.current-week-option::before {
+    content: "★ ";
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.week-dropdown option[data-current="true"] {
+    color: var(--accent-color);
+    font-weight: 600;
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+[data-theme="light"] .week-dropdown option {
+    background-color: #ffffff;
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .week-dropdown option:hover {
+    background-color: #f5f5f5;
+}
+
+[data-theme="light"] .week-dropdown option:checked {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+[data-theme="light"] .current-week-option {
+    background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+.week-dropdown::-ms-expand {
+    display: none;
+}
+
+.week-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.week-dropdown::-webkit-scrollbar-track {
+    background: var(--card-bg);
+    border-radius: 4px;
+}
+
+.week-dropdown::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.week-dropdown::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}

@@ -31,6 +31,7 @@ class ScheduleApp {
 
         document.getElementById('weekDropdown').addEventListener('change', (e) => {
             this.currentWeek = parseInt(e.target.value);
+            this.renderWeekInfo();
             this.renderSchedule();
         });
     }
@@ -49,6 +50,7 @@ class ScheduleApp {
             this.scheduleData = await this.parseExcel(arrayBuffer);
             
             this.renderWeeks();
+            this.renderWeekInfo();
             this.renderSchedule();
             this.hideError();
             
@@ -300,13 +302,34 @@ class ScheduleApp {
 
     getCurrentWeek() {
         const now = new Date();
+        const today = now.getDay();
+        if (today === 0) {
+            const start = new Date(now.getFullYear(), 8, 1);
+            const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+            return Math.floor(diff / 7) + 2;
+        }
         const start = new Date(now.getFullYear(), 8, 1);
         const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
         return Math.floor(diff / 7) + 1;
     }
 
     getDemoData() {
-
+        return {
+            8: [
+                {
+                    day: 'ПН',
+                    schedule: [
+                        {
+                            time: '09:00 - 10:30',
+                            subject: 'Математика',
+                            teacher: 'Иванов А.Б.',
+                            classroom: '101',
+                            isDayOff: false
+                        }
+                    ]
+                }
+            ]
+        };
     }
 
     renderWeeks() {
@@ -319,13 +342,69 @@ class ScheduleApp {
             weekNumbers.forEach(weekNum => {
                 const option = document.createElement('option');
                 option.value = weekNum;
-                option.textContent = `Неделя ${weekNum}`;
+                
+                if (weekNum === this.currentWeek) {
+                    option.classList.add('current-week-option');
+                    option.setAttribute('data-current', 'true');
+                    option.textContent = `★ Неделя ${weekNum}`;
+                } else {
+                    option.textContent = `Неделя ${weekNum}`;
+                }
+                
                 if (weekNum === this.currentWeek) {
                     option.selected = true;
                 }
                 dropdown.appendChild(option);
             });
         }
+    }
+
+    renderWeekInfo() {
+        const weekSelector = document.getElementById('weekSelector');
+        const existingInfo = document.getElementById('weekInfo');
+        if (existingInfo) {
+            existingInfo.remove();
+        }
+
+        const weekInfo = document.createElement('div');
+        weekInfo.id = 'weekInfo';
+        weekInfo.className = 'week-info';
+        
+        const currentWeekDates = this.getWeekDates(this.currentWeek);
+        const nextWeek = this.currentWeek + 1;
+        const nextWeekDates = this.getWeekDates(nextWeek);
+        
+        weekInfo.innerHTML = `
+            <div class="week-info-item current-week">
+                <strong>Текущая неделя ${this.currentWeek}</strong>
+                <span>${currentWeekDates.start} - ${currentWeekDates.end}</span>
+            </div>
+            <div class="week-info-item next-week">
+                <strong>Следующая неделя ${nextWeek}</strong>
+                <span>${nextWeekDates.start} - ${nextWeekDates.end}</span>
+            </div>
+        `;
+        weekSelector.appendChild(weekInfo);
+    }
+
+    getWeekDates(weekNumber) {
+        const currentYear = new Date().getFullYear();
+        const startOfYear = new Date(currentYear, 8, 1);
+        const weekStart = new Date(startOfYear);
+        weekStart.setDate(startOfYear.getDate() + (weekNumber - 1) * 7 - startOfYear.getDay() + 1);
+        const weekEnd = new Date(weekStart);
+        weekEnd.setDate(weekStart.getDate() + 6);
+        
+        return {
+            start: this.formatDate(weekStart),
+            end: this.formatDate(weekEnd)
+        };
+    }
+
+    formatDate(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        return `${day}.${month}`;
     }
 
     renderDays() {
@@ -478,6 +557,7 @@ class ScheduleApp {
         document.getElementById('errorMessage').classList.add('hidden');
     }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     new ScheduleApp();
 });
