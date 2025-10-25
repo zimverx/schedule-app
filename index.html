@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Расписание ИСП 4422</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            opacity: 0.9;
+        }
+        
+        .header-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.9;
+            transition: opacity 0.2s ease;
+        }
+        
+        .header-icon:hover {
+            opacity: 1;
+        }
+        
+        .theme-toggle, .refresh-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .theme-toggle:hover, .refresh-btn:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .empty-icon, .error-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+    </style>
+    <script src="js/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">ИСП 4422</h1>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">
+                        <img src="icons/dark_mode.svg" alt="Переключить тему" class="header-icon" id="themeIcon">
+                    </button>
+                    <button class="refresh-btn" id="refreshBtn">
+                        <img src="icons/update.svg" alt="Обновить" class="header-icon">
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="week-selector" id="weekSelector">
+                <div class="section-header">
+                    <span>
+                        <img src="icons/calendar_month.svg" alt="Календарь" class="icon">
+                        Учебная неделя
+                    </span>
+                </div>
+                <select class="week-dropdown" id="weekDropdown">
+                    <option value="">Выберите неделю</option>
+                </select>
+            </div>
+
+            <div class="day-selector" id="daySelector">
+                <div class="section-header">
+                    <span>
+                        <img src="icons/calendar_month.svg" alt="Календарь" class="icon">
+                        День недели
+                    </span>
+                </div>
+                <div class="days-grid" id="daysGrid"></div>
+            </div>
+
+            <div class="schedule-content" id="scheduleContent">
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Загрузка расписания...</p>
+                </div>
+
+                <div class="error-message hidden" id="errorMessage">
+                    <img src="icons/warning.svg" alt="Ошибка" class="error-icon">
+                    <h3>Ошибка загрузки</h3>
+                    <p>Не удалось загрузить расписание</p>
+                    <button class="retry-btn" id="retryBtn">Повторить</button>
+                </div>
+
+                <div class="schedule-list hidden" id="scheduleList"></div>
+
+                <div class="empty-state hidden" id="emptyState">
+                    <img src="icons/celebration.svg" alt="Пар нет" class="empty-icon">
+                    <h3>Пар нет</h3>
+                    <p>Можно отдохнуть</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
