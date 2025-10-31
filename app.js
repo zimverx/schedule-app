@@ -360,31 +360,7 @@ class ScheduleApp {
     }
 
     renderWeekInfo() {
-        const weekSelector = document.getElementById('weekSelector');
-        const existingInfo = document.getElementById('weekInfo');
-        if (existingInfo) {
-            existingInfo.remove();
-        }
-
-        const weekInfo = document.createElement('div');
-        weekInfo.id = 'weekInfo';
-        weekInfo.className = 'week-info';
-        
-        const currentWeekDates = this.getWeekDates(this.currentWeek);
-        const nextWeek = this.currentWeek + 1;
-        const nextWeekDates = this.getWeekDates(nextWeek);
-        
-        weekInfo.innerHTML = `
-            <div class="week-info-item current-week">
-                <strong>Текущая неделя ${this.currentWeek}</strong>
-                <span>${currentWeekDates.start} - ${currentWeekDates.end}</span>
-            </div>
-            <div class="week-info-item next-week">
-                <strong>Следующая неделя ${nextWeek}</strong>
-                <span>${nextWeekDates.start} - ${nextWeekDates.end}</span>
-            </div>
-        `;
-        weekSelector.appendChild(weekInfo);
+        this.renderDays();
     }
 
     getWeekDates(weekNumber) {
@@ -430,11 +406,11 @@ class ScheduleApp {
     }
 
     getDayDate(dayIndex) {
-        const today = new Date();
-        const dayOfWeek = today.getDay();
-        const diff = dayIndex - (dayOfWeek - 1);
-        const targetDate = new Date(today);
-        targetDate.setDate(today.getDate() + diff);
+        const weekDates = this.getWeekDates(this.currentWeek);
+        const [startDay, startMonth] = weekDates.start.split('.').map(Number);
+        const startDate = new Date(new Date().getFullYear(), startMonth - 1, startDay);
+        const targetDate = new Date(startDate);
+        targetDate.setDate(startDate.getDate() + dayIndex);
         
         return `${targetDate.getDate().toString().padStart(2, '0')}.${(targetDate.getMonth() + 1).toString().padStart(2, '0')}`;
     }

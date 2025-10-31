@@ -10,6 +10,9 @@
     --error-color: #d32f2f;
     --success-color: #388e3c;
     --hover-color: rgba(0, 0, 0, 0.04);
+    --card-bg: var(--bg-surface);
+    --accent-color: var(--primary-color);
+    --text-color: var(--text-primary);
 }
 
 [data-theme="dark"] {
@@ -24,6 +27,9 @@
     --error-color: #f44336;
     --success-color: #4caf50;
     --hover-color: rgba(255, 255, 255, 0.08);
+    --card-bg: var(--bg-surface);
+    --accent-color: var(--primary-color);
+    --text-color: var(--text-primary);
 }
 
 * {
@@ -133,7 +139,7 @@ body {
 
 .days-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 8px;
 }
 
@@ -377,7 +383,7 @@ body {
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 120px) {
     .days-grid {
         grid-template-columns: 1fr;
     }
@@ -415,10 +421,10 @@ body {
 .custom-select .week-dropdown {
     width: 100%;
     padding: 12px 16px;
-    background-color: var(--card-bg);
+    background-color: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 16px;
     cursor: pointer;
     appearance: none;
@@ -428,16 +434,10 @@ body {
     transition: all 0.2s ease;
     font-family: inherit;
 }
-
-.custom-select .week-dropdown:hover {
-    border-color: var(--accent-color);
-    background-color: var(--hover-color);
-}
-
 .custom-select .week-dropdown:focus {
     outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
 }
 
 .select-arrow {
@@ -455,37 +455,30 @@ body {
 }
 
 .week-dropdown option {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    padding: 12px 16px;
-    font-size: 14px;
-    border: none;
-    font-family: inherit;
-}
-
-.week-dropdown option:checked {
-    background-color: var(--accent-color);
-    color: white;
+    background-color: var(--bg-surface); 
+    color: var(--text-primary);
 }
 
 .week-dropdown option:hover {
-    background-color: var(--hover-color);
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.week-dropdown option:checked:hover {
+    background-color: var(--primary-dark) !important;
+    color: white !important;
 }
 
 .current-week-option {
-    color: var(--accent-color) !important;
-    font-weight: 600;
-    background-color: rgba(59, 130, 246, 0.1) !important;
+    color: var(--primary-color) !important; 
 }
 
 .current-week-option::before {
-    content: "★ ";
-    color: var(--accent-color);
-    font-weight: bold;
+    color: var(--primary-color); 
 }
 
 .week-dropdown option[data-current="true"] {
-    color: var(--accent-color);
+    color: var(--text-primary);
     font-weight: 600;
     background-color: rgba(59, 130, 246, 0.1);
 }
@@ -493,10 +486,6 @@ body {
 [data-theme="light"] .week-dropdown option {
     background-color: #ffffff;
     color: #1a1a1a;
-}
-
-[data-theme="light"] .week-dropdown option:hover {
-    background-color: #f5f5f5;
 }
 
 [data-theme="light"] .week-dropdown option:checked {
@@ -528,4 +517,30 @@ body {
 
 .week-dropdown::-webkit-scrollbar-thumb:hover {
     background: var(--accent-color);
+}
+.week-dropdown option:hover,
+.week-dropdown option:focus {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.week-dropdown option:checked,
+.week-dropdown option:checked:hover,
+.week-dropdown option:checked:focus {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.current-week-option,
+.current-week-option:hover,
+.current-week-option:focus {
+    background-color: rgba(25, 118, 210, 0.1) !important;
+    color: var(--primary-color) !important;
+}
+
+.current-week-option:checked,
+.current-week-option:checked:hover,
+.current-week-option:checked:focus {
+    background-color: var(--primary-color) !important;
+    color: white !important;
 }
