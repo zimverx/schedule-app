@@ -139,8 +139,9 @@ body {
 
 .days-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
     gap: 8px;
+    width: 100%;
 }
 
 .day-chip {
@@ -343,62 +344,7 @@ body {
     opacity: 0.7;
 }
 
-@media (max-width: 768px) {
-    .icon {
-        width: 18px;
-        height: 18px;
-    }
-    
-    .header-icon {
-        width: 22px;
-        height: 22px;
-    }
-    
-    .empty-icon, .error-icon {
-        width: 40px;
-        height: 40px;
-    }
-}
 
-@media (max-width: 480px) {
-    .days-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .main {
-        padding: 12px;
-    }
-    
-    .week-selector, .day-selector {
-        padding: 12px;
-    }
-    
-    .schedule-item {
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    .schedule-time {
-        align-self: flex-start;
-    }
-}
-
-@media (max-width: 120px) {
-    .days-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .header-content {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-    }
-    
-    .header-actions {
-        align-self: stretch;
-        justify-content: center;
-    }
-}
 
 .icon, .meta-icon, .empty-icon, .error-icon {
     filter: invert(1);
