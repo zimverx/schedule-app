@@ -40,7 +40,7 @@ class ScheduleApp {
         this.showLoading();
         
         try {
-            const response = await fetch('https://docs.google.com/spreadsheets/d/1rbUMw-YmpSBfNQPW5L6-C80BB9vvxx7l/export?format=xlsx&gid=493476051');
+            const response = await fetch('https://docs.google.com/spreadsheets/d/1NzZJ-EsIW_3A_89i6zjvXrVJuMaGllQZ/export?format=xlsx&gid=2079030459');
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
