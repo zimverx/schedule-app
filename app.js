@@ -72,26 +72,20 @@ class ScheduleApp {
 
     processWorkbook(workbook) {
         const weeks = {};
-        workbook.SheetNames.forEach(sheetName => {
-            console.log(`Processing sheet: ${sheetName}`);
-            
+        workbook.SheetNames.forEach(sheetName => {  
             const worksheet = workbook.Sheets[sheetName];
             const data = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
             const sheetWeeks = this.parseSheetData(data, sheetName);
             Object.assign(weeks, sheetWeeks);
         });
-        
-        console.log('Parsed weeks:', weeks);
         return weeks;
     }
 
     parseSheetData(data, sheetName) {
         const weeks = {};
         const groupColumns = this.findGroupColumns(data);
-        console.log(`Found group columns:`, groupColumns);
         
         if (groupColumns.length === 0) {
-            console.log('No group columns found in sheet:', sheetName);
             return weeks;
         }
         groupColumns.forEach(colIndex => {
@@ -104,20 +98,14 @@ class ScheduleApp {
 
     findGroupColumns(data) {
         const columns = [];
-        if (data.length <= 8) return columns;
-        
-        const groupRow = data[8];
+        if (data.length <= 0) return columns;
+        const groupRow = data[0];
         if (!groupRow) return columns;
         
         let foundStart = false;
         
         for (let col = 0; col < groupRow.length; col++) {
             const cellValue = String(groupRow[col] || '').trim();
-            
-            if (cellValue.includes('4522')) {
-                break;
-            }
-            
             if (cellValue.includes('4422')) {
                 foundStart = true;
             }
@@ -126,14 +114,12 @@ class ScheduleApp {
                 columns.push(col);
             }
         }
-        
         return columns;
     }
 
     parseGroupColumn(data, groupCol) {
         const weeks = {};
         const weekNumbers = this.findWeekNumbers(data, groupCol);
-        console.log(`Week numbers in column ${groupCol}:`, weekNumbers);
         Object.entries(weekNumbers).forEach(([weekNum, weekRow]) => {
             const daySchedules = this.parseWeekSchedule(data, groupCol, weekRow);
             
@@ -147,7 +133,7 @@ class ScheduleApp {
 
     findWeekNumbers(data, groupCol) {
         const weekNumbers = {};
-        for (let row = 8; row <= 18; row++) {
+        for (let row = 0; row <= 18; row++) {
             if (row >= data.length) break;
             
             const rowData = data[row];
@@ -194,7 +180,27 @@ class ScheduleApp {
                 }
                 
                 if (!currentDay) continue;
-                const timeCell = rowData[1] ? String(rowData[1]).trim() : '';
+                let timeCell = rowData[1] ? String(rowData[1]).trim() : '';
+                switch(timeCell){
+                    case "1":
+                        timeCell = "8:00-9:30";
+                        break;
+                    case "2":
+                        timeCell = "9:40-11:10";
+                        break;
+                    case "3":
+                        timeCell = "12:00-13:30";
+                        break;
+                    case "4":
+                        timeCell = "13:40-15:10";
+                        break;
+                    case "5":
+                        timeCell = "15:50-17:20";
+                        break;
+                    case "6":
+                        timeCell = "17:30-19:00"
+                        break;
+                }
                 const subjectCell = rowData[groupCol] ? String(rowData[groupCol]).trim() : '';
                 
                 if (subjectCell && subjectCell !== '-' && subjectCell !== '') {
@@ -209,7 +215,7 @@ class ScheduleApp {
                     } else {
                         const parsedInfo = this.parseSubjectInfo(subjectCell);
                         dayMap[currentDay].push({
-                            time: this.normalizeTime(timeCell),
+                            time: timeCell,
                             subject: parsedInfo.subject,
                             teacher: parsedInfo.teacher,
                             classroom: parsedInfo.classroom,
