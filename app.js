@@ -1,7 +1,7 @@
 class ScheduleApp {
     constructor() {
         this.currentWeek = this.getCurrentWeek();
-        this.currentDay = new Date().getDay() - 1;
+        this.currentDay = new Date().getDay()-1;
         if (this.currentDay < 0) this.currentDay = 0;
         this.scheduleData = null;
         this.theme = localStorage.getItem('theme') || 'dark';
@@ -310,7 +310,7 @@ class ScheduleApp {
         const now = new Date();
         const today = now.getDay();
         if (today === 0) {
-            const start = new Date(now.getFullYear(), 8, 1);
+            const start = new Date(now.getFullYear()-1, 8, 1);
             const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
             return Math.floor(diff / 7) + 2;
         }
