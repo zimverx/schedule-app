@@ -310,11 +310,11 @@ class ScheduleApp {
         const now = new Date();
         const today = now.getDay();
         if (today === 0) {
-            const start = new Date(now.getFullYear()-1, 8, 1);
+            const start = new Date(2025, 8, 1);
             const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
             return Math.floor(diff / 7) + 2;
         }
-        const start = new Date(now.getFullYear(), 8, 1);
+        const start = new Date(2025, 8, 1);
         const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
         return Math.floor(diff / 7) + 1;
     }
@@ -370,7 +370,7 @@ class ScheduleApp {
     }
 
     getWeekDates(weekNumber) {
-        const currentYear = new Date().getFullYear();
+        const currentYear = 2025;
         const startOfYear = new Date(currentYear, 8, 1);
         const weekStart = new Date(startOfYear);
         weekStart.setDate(startOfYear.getDate() + (weekNumber - 1) * 7 - startOfYear.getDay() + 1);
@@ -414,7 +414,7 @@ class ScheduleApp {
     getDayDate(dayIndex) {
         const weekDates = this.getWeekDates(this.currentWeek);
         const [startDay, startMonth] = weekDates.start.split('.').map(Number);
-        const startDate = new Date(new Date().getFullYear(), startMonth - 1, startDay);
+        const startDate = new Date(2025, startMonth - 1, startDay);
         const targetDate = new Date(startDate);
         targetDate.setDate(startDate.getDate() + dayIndex);
         
